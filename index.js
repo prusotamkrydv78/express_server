@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
 dotenv.config();
-
+//asdfkj
 // Verify required environment variables
 if (!process.env.GEMINI_API_KEY) {
     console.error('Error: GEMINI_API_KEY environment variable is not set');
