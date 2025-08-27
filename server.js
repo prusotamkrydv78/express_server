@@ -32,12 +32,7 @@ app.post("/api/contact", (req, res) => {
     const { name, message } = req.body;
     res.json({ status: "success", name, message });
 });
-
-// Catch-all route
-app.all("*", (req, res) => {
-    res.status(404).json({ error: "Route not found 😔" });
-});
-
+ 
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT} 💖`);
