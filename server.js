@@ -1,61 +1,44 @@
+// server.js
 import express from "express";
 import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 4000;
+
+// Middleware
+app.use(cors());
 app.use(express.json());
 
-// 🌸 Allowed origins for CORS
-const allowedOrigins = [
-    "http://localhost:3000",
-    "https://todo-app-bc.vercel.app"
-];
-
-app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-            return callback(null, origin);
-        } else {
-            return callback(new Error("Not allowed by CORS"));
-        }
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-}));
-
-app.options("*", cors()); // handle preflight 💖
-
-
-// 💌 Routes
+// 🌸 Routes
 app.get("/", (req, res) => {
-    res.json({ message: "Hello baby 😘, your backend is running fine 💕" });
+    res.send("Welcome to my cozy Express app! 💕");
 });
 
 app.get("/api/users", (req, res) => {
     res.json([
-        { id: 1, name: "Alice", email: "alice@example.com" },
-        { id: 2, name: "Bob", email: "bob@example.com" },
-        { id: 3, name: "Prusotam 💖", email: "love@you.com" }
+        { id: 1, name: "Alice" },
+        { id: 2, name: "Bob" },
     ]);
 });
 
-app.get("/api/todos", (req, res) => {
+app.get("/api/products", (req, res) => {
     res.json([
-        { id: 1, title: "Learn Express", completed: true },
-        { id: 2, title: "Fix CORS issue 😅", completed: false },
-        { id: 3, title: "Build amazing apps with Anuska 💕", completed: false }
+        { id: 1, name: "Laptop", price: 1200 },
+        { id: 2, name: "Phone", price: 800 },
     ]);
 });
 
-app.post("/api/todos", (req, res) => {
-    const { title } = req.body;
-    res.status(201).json({ id: Date.now(), title, completed: false });
+app.post("/api/contact", (req, res) => {
+    const { name, message } = req.body;
+    res.json({ status: "success", name, message });
 });
 
-app.get("/api/ai-chat/chat", (req, res) => {
-    res.json({ reply: "Hey baby 💖, I’m your AI chat endpoint ✨" });
+// Catch-all route
+app.all("*", (req, res) => {
+    res.status(404).json({ error: "Route not found 😔" });
 });
 
-
-export default app;
+// Start server
+app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT} 💖`);
+});
