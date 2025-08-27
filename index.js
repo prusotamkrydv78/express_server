@@ -32,7 +32,7 @@ app.post("/api/contact", (req, res) => {
     const { name, message } = req.body;
     res.json({ status: "success", name, message });
 });
- 
+
 // Start server
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT} 💖`);
